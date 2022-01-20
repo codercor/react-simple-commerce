@@ -10,7 +10,7 @@ const create = async (req, res) => {
     console.log( username, password, email, role, name, phone, address,lastName);
     let result = await userModel.create(req.body);
     res.json({
-        result
+        result: result?"User created successfully":"User creation failed"
     });
 }
 const getOneById = async (req, res) => {

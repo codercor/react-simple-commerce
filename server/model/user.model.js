@@ -13,7 +13,7 @@ module.exports.getOneById = async (id) => {
 module.exports.create = async (data) => {
     //a user has these properties; username, password, email, role, name, phone, address,lastName
     let result = await db.query(`INSERT INTO users (username, password, email, role, name, phone, address,lastName) VALUES (?,?,?,?,?,?,?,?)`, [data.username, data.password, data.email, data.role, data.name, data.phone, data.address,data.lastName]);
-    return result[0];
+    return result[0].affectedRows > 0;
 }
 
 module.exports.update = async (data,id) => {
