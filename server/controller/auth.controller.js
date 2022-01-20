@@ -1,5 +1,6 @@
 const { generateToken } = require('../helpers/token');
 const authModel = require('../model/auth.model');
+
 const login = async (req, res) => {
     const { username, password } = req.body;
     let isLogin = await authModel.login(username,password);
@@ -20,8 +21,10 @@ const login = async (req, res) => {
 
 }
 const register = async (req, res) => {
+    req.body.role = 0;
+    let result = await authModel.register(req.body);
     res.json({
-        message: 'User registered successfully'
+        result
     });
 }
 module.exports = {

@@ -1,5 +1,5 @@
 const connect = require('../config/db');
-
+const userModel = require('./user.model');
 module.exports.login = async (username,password)=>{
     let con = await connect();
     let [rows] = await con.query("SELECT * FROM users WHERE username = ? AND password = ?",[username,password]);
@@ -8,3 +8,5 @@ module.exports.login = async (username,password)=>{
     }
     return false;
 }
+
+module.exports.register = userModel.create;
