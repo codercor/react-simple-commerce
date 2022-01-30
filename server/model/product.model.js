@@ -1,14 +1,56 @@
-const router = require('express').Router();
-const productController = require('../controller/product.controller');
+const { Sequelize, DataTypes, Model } = require('sequelize');
+const sequelize = require("../config/db")
 
-router.route('/')
-.get(productController.getAll)
-.post(productController.create);
+class Product extends Model { }
 
-router.route('/:id')
-.get(productController.getOneById)
-.put(productController.update)
-.delete(productController.remove);
+Product.init({
+    // Model attributes are defined here
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    price: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+    },
+    discount: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+    },
+    store_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    stock: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    category_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+}, {
+    // Other model options go here
+    sequelize, // We need to pass the connection instance
+    modelName: 'product' // We need to choose the model name
+});
 
+// the defined model is the class itself
+console.log(Product === sequelize.models.Product); // true
 
-module.exports = router;
+//Product.sync({ force: true })
+
+module.exports = Product;

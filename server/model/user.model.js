@@ -1,32 +1,70 @@
+// Full texts	
+// id
+// username
+// email
+// password
+// name
+// lastName
+// address
+// phone
+// role
 
-const db = require('../config/db').promise();
-module.exports.getAll = async () => {
-    let result = await db.query(`SELECT * FROM users`);
-    return result[0];
-}
+const { Sequelize, DataTypes, Model } = require('sequelize');
+const sequelize = require("../config/db")
 
-module.exports.getOneById = async (id) => {
-    let result = await db.query(`SELECT * FROM users WHERE id = ?`, [id]);
-    return result[0];
-}
+class User extends Model { }
 
-module.exports.create = async (data) => {
-    //a user has these properties; username, password, email, role, name, phone, address,lastName
-    let result = await db.query(`INSERT INTO users (username, password, email, role, name, phone, address,lastName) VALUES (?,?,?,?,?,?,?,?)`, [data.username, data.password, data.email, data.role, data.name, data.phone, data.address,data.lastName]);
-    if(result[0].affectedRows > 0){
-        let user = await this.getOneById(result[0].insertId);
-        return user;
+User.init({
+    // Model attributes are defined here
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
+    password : {
+        type: DataTypes.STRING,
+        allowNull:false
+    },
+    name:{
+        type: DataTypes.STRING,
+        allowNull:false
+    },
+    lastName:{
+        type: DataTypes.STRING,
+        allowNull:false
+    },
+    address:{
+        type: DataTypes.STRING,
+        allowNull:true
+    },
+    phone:{
+        type: DataTypes.STRING,
+        allowNull:true
+    },
+    role:{
+        type: DataTypes.STRING,
+        allowNull:true
     }
-    return null;
-}
 
-module.exports.update = async (data,id) => {
-    //a user has these properties; username, password, email, role, name, phone, address,lastName
-    let result = await db.query(`UPDATE users SET username = ?, password = ?, email = ?, role = ?, name = ?, phone = ?, address = ?,lastName = ? WHERE id = ?`, [data.username, data.password, data.email, data.role, data.name, data.phone, data.address,data.lastName, id]);
-    return result[0];
-}
+}, {
+    // Other model options go here
+    sequelize, // We need to pass the connection instance
+    modelName: 'user' // We need to choose the model name
+});
 
-module.exports.remove = async (id) => {
-    let result = await db.query(`DELETE FROM users WHERE id = ?`, [id]);
-    return result[0];
-}
+// the defined model is the class itself
+console.log(User === sequelize.models.User); // true
+
+//User.sync({ force: false })
+
+module.exports = User;

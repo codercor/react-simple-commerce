@@ -1,35 +1,72 @@
 const userModel = require('../model/user.model');
 const getAll = async (req, res) => {
-    let users = await userModel.getAll();
+    let users = await userModel.findAll();
     res.json({
         users
     });
 }
 const create = async (req, res) => {
-    const { username, password, email, role, name,lastName , phone, address } = req.body;
-    console.log( username, password, email, role, name, phone, address,lastName);
-    let result = await userModel.create(req.body);
-    res.json({
-        result: result?"User created successfully":"User creation failed"
-    });
+    try {
+        let result = await userModel.create(req.body);
+        result ? res.status(200).json({
+            result: "User created successfully"
+        }) : res.status(400).json({
+            result: "Error"
+        });
+
+    } catch (error) {
+        res.status(400).json({
+            error: error.message,
+            field: error.errors[0].path
+        });
+    }
+
 }
 const getOneById = async (req, res) => {
-    let user = await userModel.getOneById(req.params.id);
+    let user = await userModel.findByPk(req.params.id);
     res.json({
-        user:{...user[0]}
+        user
     });
 }
 const update = async (req, res) => {
-    let result = await userModel.update(req.body, req.params.id);
-    res.json({
-        result
-    });
+
+    try {
+        let result = await userModel.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        });
+        result ? res.status(200).json({
+            result: "User updated successfully"
+        }) : res.status(400).json({
+            result: "Error"
+        });
+    } catch (error) {
+        res.status(400).json({
+            error: error.message,
+            field: error.errors[0].path
+        });
+    }
 }
 const remove = async (req, res) => {
-    let result = await userModel.remove(req.params.id);
-    res.json({
-        result
-    });
+    try {
+        let result = await userModel.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
+        result ? res.status(200).json({
+            result: "User deleted successfully"
+        }) : res.status(400).json({
+            result: "Error"
+        });
+
+    } catch (error) {
+        res.status(400).json({
+            error: error.message,
+            field: error.errors[0].path
+        });
+    }
 }
 
 module.exports = {
