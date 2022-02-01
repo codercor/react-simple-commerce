@@ -3,8 +3,13 @@ const userModel = require('../model/user.model');
 
 const login = async (req, res) => {
     const { username, password } = req.body;
-    let user = await authModel.login(username, password);
-    if (user) {
+    let user = await userModel.findOne({
+         where: {
+                username,
+                password
+            }
+    });
+    if(user){
         let token = generateToken(user);
         console.log(token);
         res.status(200).json({
@@ -13,7 +18,7 @@ const login = async (req, res) => {
             token,
             user
         });
-    } else {
+    }else{
         res.status(401).json({
             status: false,
             message: "Login Failed"
@@ -23,9 +28,17 @@ const login = async (req, res) => {
 }
 const register = async (req, res) => {
     req.body.role = 0;
-    let result = await authModel.register(req.body);
-    if (result) {
-        let user = await authModel.login(req.body.username, req.body.password);
+    try {
+        
+   
+    let result = await userModel.create(req.body);
+    if(result){
+        let user = await userModel.findOne({
+            where: {
+                   username: req.body.username,
+                   password: req.body.password
+               }
+       });
         let token = generateToken(user);
         res.status(200).json({
             status: true,
@@ -33,7 +46,7 @@ const register = async (req, res) => {
             token,
             user
         });
-    } else {
+    }else{
         res.status(401).json({
             status: false,
             message: "Register Failed"
@@ -42,8 +55,8 @@ const register = async (req, res) => {
 } catch (error) {
     res.status(400).json({
         error: error.message,
-        field: error.errors ? error.errors[0].path : null
-    });
+        field : error.errors ? error.errors[0].path : null
+    });    
 }
 
 }

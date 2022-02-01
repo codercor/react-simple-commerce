@@ -10,6 +10,8 @@ const productRoute = require('./routes/product.route');
 
 app.use('/user', userRoute);
 app.use('/auth', authRoute)
+app.use('/product', productRoute)
+
 
 
 app.listen(port, () => console.log(`🚀 React Commerce Server Running on http://localhost:${port}! 🚀`));
