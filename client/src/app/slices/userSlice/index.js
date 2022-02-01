@@ -5,25 +5,20 @@ export const userSlice = createSlice({
     initialState: {
         username: "",
         email: "",
-        role: 0,
+        role: null,
         name: "",
         lastname: "",
         phone: "",
         address: "",
     },
     reducers: {
-        increment: (state) => {
-
-        },
-        decrement: (state) => {
-
-        },
-        incrementByAmount: (state, action) => {
-
-        },
+        setUserData: (state, action) => {
+            console.log(action.payload);
+            return state = action.payload
+        }
     },
 })
 
-export const { increment, decrement, incrementByAmount } = userSlice.actions
+export const { setUserData } = userSlice.actions
 
 export default userSlice.reducer

@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Box, TextField, Button, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Box, Container, Grid, Switch } from '@mui/material';
+import { Login, Register } from '../../components';
+
 
 export default function LoginRegister() {
     return (
@@ -8,7 +9,7 @@ export default function LoginRegister() {
             component="form"
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '100%' },
-                height: "80vh",
+                marginTop: "2%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center"
@@ -17,30 +18,20 @@ export default function LoginRegister() {
             noValidate
             autoComplete="off"
         >
-            <div style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center"
-            }}>
-                <TextField
-                    required
-                    id="outlined-required"
-                    label="Username"
-                />
-                <TextField
-                    required
-                    id="outlined-password-input"
-                    label="Password"
-                    type="password"
-                />
-                <Button variant="outlined" sx={{
-                    width: "100%"
-                }}>Login</Button>
-                <Typography mt={2}>
-                    Do not have an account yet? <Link to="/register">Click here!</Link>
-                </Typography>
-            </div>
+            <Container>
+                <Grid container >
+                    <Grid item md={5}>
+                        <Login />
+                    </Grid>
+                    <Grid item md={2}>
+
+                    </Grid>
+                    <Grid item md={5}>
+                        <Register />
+                    </Grid>
+
+                </Grid>
+            </Container>
         </Box>
     );
 }
