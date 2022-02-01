@@ -52,8 +52,9 @@ User.init({
         allowNull:true
     },
     role:{
-        type: DataTypes.STRING,
-        allowNull:true
+        type: DataTypes.INTEGER,
+        allowNull:false,
+        defaultValue:0
     }
 
 }, {
