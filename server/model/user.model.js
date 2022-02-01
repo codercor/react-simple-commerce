@@ -66,6 +66,6 @@ User.init({
 // the defined model is the class itself
 console.log(User === sequelize.models.User); // true
 
-//User.sync({ force: false })
+//User.sync({ force: true })
 
 module.exports = User;

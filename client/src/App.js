@@ -16,11 +16,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="login" element={<LoginRegister />} />
         <Route path="register" element={<LoginRegister />} />
-        <Route path="userpanel" >
-          <Route path="settings" element={role == 0 ? <UserPanel.Settings /> : <Home />} />
+        <Route path="userpanel" element={<UserPanel.Wrapper/>} >
           <Route index element={role == 0 ? <UserPanel.Home /> : <Home />} />
+          <Route path="settings" element={role == 0 ? <UserPanel.Settings /> : <Home />} />
         </Route>
-        <Route path="storepanel" >
+        <Route path="storepanel">
+          
           <Route path="settings" element={role == 1 ? <StorePanel.Settings /> : <Home />} />
           <Route index element={role == 1 ? <StorePanel.Home /> : <Home />} />
         </Route>
