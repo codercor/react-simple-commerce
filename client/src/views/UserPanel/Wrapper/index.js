@@ -27,6 +27,7 @@ export default function Wrapper() {
       title: "Settings",
       to: "/settings"
     },
+    
   ]);
   return <div>
     <Box sx={{ flexGrow: 1 }}>
